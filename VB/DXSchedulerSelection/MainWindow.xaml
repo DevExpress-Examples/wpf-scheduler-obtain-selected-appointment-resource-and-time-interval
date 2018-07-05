@@ -1,0 +1,71 @@
+<dx:DXWindow
+    x:Class="DXSchedulerSelection.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
+    xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm"
+    xmlns:dxsch="http://schemas.devexpress.com/winfx/2008/xaml/scheduling"
+    xmlns:local="clr-namespace:DXSchedulerSelection"
+    Width="800"
+    Height="600"
+    DataContext="{dxmvvm:ViewModelSource local:MainViewModel}"
+    Title="Selection Example">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50" />
+            <RowDefinition Height="100" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <ScrollViewer Grid.Row="0" VerticalScrollBarVisibility="Auto">
+            <ItemsControl ItemsSource="{DXBinding '@e(schedulerControl).SelectedAppointments'}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <TextBox Background="Beige" Text="{Binding Subject}" />
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </ScrollViewer>
+        <TextBox
+            x:Name="OutputBox"
+            Grid.Row="1"
+            VerticalScrollBarVisibility="Auto" />
+        <dxsch:SchedulerControl
+            x:Name="schedulerControl"
+            Grid.Row="2"
+            ActiveViewIndex="0"
+            DependencyPropertyChanged="schedulerControl_DependencyPropertyChanged"
+            FirstDayOfWeek="Monday"
+            GroupType="Resource">
+            <dxsch:DayView
+                x:Name="dayView1"
+                DayCount="2"
+                ResourcesPerPage="2"
+                VisibleTime="06:00:00-21:00:00" />
+            <dxsch:SchedulerControl.DataSource>
+                <dxsch:DataSource
+                    AppointmentLabelsSource="{Binding SportGroups}"
+                    AppointmentsSource="{Binding SportEvents}"
+                    ResourcesSource="{Binding SportChannels}">
+                    <dxsch:DataSource.AppointmentMappings>
+                        <dxsch:AppointmentMappings
+                            AllDay="AllDay"
+                            End="EndTime"
+                            Id="Id"
+                            LabelId="SportId"
+                            RecurrenceInfo="RecurrenceInfo"
+                            Reminder="ReminderInfo"
+                            ResourceId="ChannelId"
+                            Start="StartTime"
+                            Subject="Caption"
+                            Type="Type" />
+                    </dxsch:DataSource.AppointmentMappings>
+                    <dxsch:DataSource.ResourceMappings>
+                        <dxsch:ResourceMappings Caption="Caption" Id="Id" />
+                    </dxsch:DataSource.ResourceMappings>
+                </dxsch:DataSource>
+            </dxsch:SchedulerControl.DataSource>
+        </dxsch:SchedulerControl>
+    </Grid>
+
+</dx:DXWindow>
