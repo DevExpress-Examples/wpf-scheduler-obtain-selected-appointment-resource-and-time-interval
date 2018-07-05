@@ -1,4 +1,4 @@
-# How to obtain the appointment or time interval selected by an end-user
+# How to obtain the appointment, resource or time interval selected by an end-user
 
 This code example shows how to work with selected appointments, resources and time intervals in code.
 
