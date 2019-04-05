@@ -1,7 +1,7 @@
 <!-- default file list -->
 *Files to look at*:
 
-* [MainWindow.xaml](./CS/DXSchedulerSelection/MainWindow.xaml) (VB: [MainWindow.xaml.vb](./VB/DXSchedulerSelection/MainWindow.xaml.vb))
+* [MainWindow.xaml](./CS/DXSchedulerSelection/MainWindow.xaml) (VB: [MainWindow.xaml](./VB/DXSchedulerSelection/MainWindow.xaml))
 * [MainWindow.xaml.cs](./CS/DXSchedulerSelection/MainWindow.xaml.cs) (VB: [MainWindow.xaml.vb](./VB/DXSchedulerSelection/MainWindow.xaml.vb))
 <!-- default file list end -->
 # How to obtain the appointment, resource or time interval selected by an end-user
