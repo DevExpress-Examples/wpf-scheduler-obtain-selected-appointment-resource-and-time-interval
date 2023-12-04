@@ -1,34 +1,22 @@
-'#Region "#viewmodel"
-Imports DevExpress.Mvvm.DataAnnotations
+Imports DevExpress.Mvvm
 Imports System.Collections.ObjectModel
 
 Namespace DXSchedulerSelection
 
-    <POCOViewModel>
     Public Class MainViewModel
+        Inherits ViewModelBase
 
-        Private ReadOnly data As SportChannelsData = New SportChannelsData(3)
-
-        Protected Sub New()
+        Public Sub New()
+            Dim data As SportChannelsData = New SportChannelsData(3)
+            SportEvents = data.Events
+            SportChannels = data.Channels
+            SportGroups = data.Groups
         End Sub
 
-        Public Overridable ReadOnly Property SportEvents As ObservableCollection(Of SportEvent)
-            Get
-                Return data.Events
-            End Get
-        End Property
+        Public ReadOnly Property SportEvents As ObservableCollection(Of SportEvent)
 
-        Public Overridable ReadOnly Property SportChannels As ObservableCollection(Of SportChannel)
-            Get
-                Return data.Channels
-            End Get
-        End Property
+        Public ReadOnly Property SportChannels As ObservableCollection(Of SportChannel)
 
-        Public Overridable ReadOnly Property SportGroups As ObservableCollection(Of SportGroup)
-            Get
-                Return data.Groups
-            End Get
-        End Property
+        Public ReadOnly Property SportGroups As ObservableCollection(Of SportGroup)
     End Class
 End Namespace
-'#End Region  ' #viewmodel
