@@ -1,18 +1,16 @@
-﻿#region #viewmodel
-using DevExpress.Mvvm.DataAnnotations;
+﻿using DevExpress.Mvvm;
 using System.Collections.ObjectModel;
 
-namespace DXSchedulerSelection
-{
-    [POCOViewModel]
-    public class MainViewModel
-    {
-        readonly SportChannelsData data = new SportChannelsData(3);
-        protected MainViewModel(){
+namespace DXSchedulerSelection {
+    public class MainViewModel : ViewModelBase {
+        public MainViewModel() {
+            SportChannelsData data = new SportChannelsData(3);
+            SportEvents = data.Events;
+            SportChannels = data.Channels;
+            SportGroups = data.Groups;
         }
-        public virtual ObservableCollection<SportEvent> SportEvents { get { return data.Events; } }
-        public virtual ObservableCollection<SportChannel> SportChannels { get { return data.Channels; } }
-        public virtual ObservableCollection<SportGroup> SportGroups { get { return data.Groups; } }
+        public ObservableCollection<SportEvent> SportEvents { get; }
+        public ObservableCollection<SportChannel> SportChannels { get; }
+        public ObservableCollection<SportGroup> SportGroups { get; }
     }
 }
-#endregion #viewmodel

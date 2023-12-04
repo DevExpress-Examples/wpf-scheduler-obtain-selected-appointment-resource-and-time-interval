@@ -1,40 +1,51 @@
-<dx:DXWindow
+<Window
     x:Class="DXSchedulerSelection.MainWindow"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
-    xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm"
     xmlns:dxsch="http://schemas.devexpress.com/winfx/2008/xaml/scheduling"
-    xmlns:local="clr-namespace:DXSchedulerSelection"
+    xmlns:local="clr-namespace:DXSchedulerSelection" 
+    xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
     Width="800"
     Height="600"
-    DataContext="{dxmvvm:ViewModelSource local:MainViewModel}"
     Title="Selection Example">
+    <Window.DataContext>
+        <local:MainViewModel/>
+    </Window.DataContext>
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="50" />
-            <RowDefinition Height="100" />
-            <RowDefinition Height="*" />
+            <RowDefinition Height="130" />
+            <RowDefinition />
         </Grid.RowDefinitions>
-        <ScrollViewer Grid.Row="0" VerticalScrollBarVisibility="Auto">
-            <ItemsControl ItemsSource="{DXBinding '@e(schedulerControl).SelectedAppointments'}">
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate>
-                        <TextBox Background="Beige" Text="{Binding Subject}" />
-                    </DataTemplate>
-                </ItemsControl.ItemTemplate>
-            </ItemsControl>
-        </ScrollViewer>
-        <TextBox
-            x:Name="OutputBox"
-            Grid.Row="1"
-            VerticalScrollBarVisibility="Auto" />
+
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <StackPanel VerticalAlignment="Center" Margin="6">
+                <GroupBox Header="Selected Interval:">
+                    <TextBox Text="{DXBinding '@e(schedulerControl).SelectedInterval', Mode=OneWay}"/>
+                </GroupBox>
+                <GroupBox Header="Selected Resource:">
+                    <TextBox Text="{DXBinding '@e(schedulerControl).SelectedResource.Caption', Mode=OneWay}"/>
+                </GroupBox>
+            </StackPanel>
+            <GroupBox Grid.Column="1" Header="Selected Appointments:" Margin="6">
+                <dxe:ListBoxEdit ItemsSource="{DXBinding '@e(schedulerControl).SelectedAppointments'}">
+                    <dxe:ListBoxEdit.ItemTemplate>
+                        <DataTemplate>
+                            <TextBox Background="Beige" Text="{Binding Subject}" />
+                        </DataTemplate>
+                    </dxe:ListBoxEdit.ItemTemplate>
+                </dxe:ListBoxEdit>
+            </GroupBox>
+        </Grid>
+
         <dxsch:SchedulerControl
             x:Name="schedulerControl"
-            Grid.Row="2"
+            Grid.Row="1"
             ActiveViewIndex="0"
-            DependencyPropertyChanged="schedulerControl_DependencyPropertyChanged"
             FirstDayOfWeek="Monday"
             GroupType="Resource">
             <dxsch:DayView
@@ -67,5 +78,4 @@
             </dxsch:SchedulerControl.DataSource>
         </dxsch:SchedulerControl>
     </Grid>
-
-</dx:DXWindow>
+</Window>

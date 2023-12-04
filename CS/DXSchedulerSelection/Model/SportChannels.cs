@@ -6,10 +6,8 @@ using System.Globalization;
 using System.Linq;
 using System.Windows.Media;
 
-namespace DXSchedulerSelection
-{
-    public class SportEvent
-    {
+namespace DXSchedulerSelection {
+    public class SportEvent {
         public int Id { get; set; }
         public DateTime StartTime { get; set; }
         public DateTime EndTime { get; set; }
@@ -24,23 +22,20 @@ namespace DXSchedulerSelection
         public string ReminderInfo { get; set; }
         public string CustomText { get { return String.Format("[{0}] - {1}", Location, Caption); } set { } }
     }
-    public class SportChannel
-    {
+    public class SportChannel {
         public int Id { get; set; }
         public string Caption { get; set; }
         public bool HasNews { get { return !NewsTimeRange.IsZero; } }
         public bool IsVisible { get; set; }
         public TimeSpanRange NewsTimeRange { get; set; }
     }
-    public class SportGroup
-    {
+    public class SportGroup {
         public int Id { get; set; }
         public string Caption { get; set; }
         public Color Color { get; set; }
         public ImageSource Image { get; set; }
     }
-    public class SportChannelsData
-    {
+    public class SportChannelsData {
         public static readonly SportGroup[] SportGroups = {
             new SportGroup() { Id = 0, Caption = "SportNews", Color = Colors.White },
             new SportGroup() { Id = 1, Caption = "Basketball", Color = Color.FromRgb(0xFF, 0xC2, 0xBE)},
@@ -55,37 +50,30 @@ namespace DXSchedulerSelection
             new SportGroup() { Id = 10, Caption = "Shooting", Color = Color.FromRgb(0xFF, 0xF7, 0xA5)},
         };
 
-        static ObservableCollection<SportEvent> GenerateEvents(int dayCount)
-        {
+        static ObservableCollection<SportEvent> GenerateEvents(int dayCount) {
             ObservableCollection<SportEvent> result = new ObservableCollection<SportEvent>();
             int aptId = 0;
 
-            foreach (SportChannel ch in sportChannels)
-            {
+            foreach (SportChannel ch in sportChannels) {
                 DateTime start = DateTime.Today - TimeSpan.FromDays(dayCount);
                 DateTime end = DateTime.Today + TimeSpan.FromDays(dayCount);
                 if (ch.HasNews)
                     result.Add(GetRandomRecurrenceSportEvent(aptId++, start, ch, (dayCount * 2) - 1));
-                for (DateTime i = start; i < end; i += TimeSpan.FromDays(1))
-                {
-                    if (i.DayOfWeek == DayOfWeek.Saturday || i.DayOfWeek == DayOfWeek.Sunday)
-                    {
+                for (DateTime i = start; i < end; i += TimeSpan.FromDays(1)) {
+                    if (i.DayOfWeek == DayOfWeek.Saturday || i.DayOfWeek == DayOfWeek.Sunday) {
                         result.Add(GetRandomSportEvent(aptId++, i, i + TimeSpan.FromDays(1), ch.Id));
                         continue;
                     }
                     DateTime airtimeStart = new DateTime(i.Year, i.Month, i.Day, 6, 0, 0);
                     DateTime airtimeEnd = new DateTime(i.Year, i.Month, i.Day, 21, 0, 0);
                     DateTime aptStartTime = airtimeStart;
-                    while (aptStartTime < airtimeEnd)
-                    {
+                    while (aptStartTime < airtimeEnd) {
                         DateTime aptEndTime;
                         TimeSpan duration = TimeSpan.FromMinutes(rnd.Next(20, 180));
                         TimeSpanRange newsTimeRange = ch.NewsTimeRange;
-                        if (ch.HasNews)
-                        {
+                        if (ch.HasNews) {
                             long timeBeforeNews = (newsTimeRange.Start - aptStartTime.TimeOfDay).Ticks;
-                            if (timeBeforeNews > 0 && (timeBeforeNews < TimeSpan.FromMinutes(30).Ticks || timeBeforeNews <= duration.Ticks))
-                            {
+                            if (timeBeforeNews > 0 && (timeBeforeNews < TimeSpan.FromMinutes(30).Ticks || timeBeforeNews <= duration.Ticks)) {
                                 aptEndTime = aptStartTime.Date + newsTimeRange.Start;
                                 result.Add(GetRandomSportEvent(aptId++, aptStartTime, aptEndTime, ch.Id));
                                 aptStartTime = aptEndTime.Date + newsTimeRange.End;
@@ -101,8 +89,7 @@ namespace DXSchedulerSelection
             return result;
         }
         static string recurrenceInfoFormat = @"<RecurrenceInfo Start=""{0}"" End=""{1}"" WeekDays=""{2}"" OccurrenceCount=""{3}"" Range=""{4}"" Type=""{5}"" Id=""{6}""/>";
-        static SportEvent GetRandomRecurrenceSportEvent(int id, DateTime startDate, SportChannel channel, int dayCount)
-        {
+        static SportEvent GetRandomRecurrenceSportEvent(int id, DateTime startDate, SportChannel channel, int dayCount) {
             SportEvent pattern = new SportEvent();
             pattern.Id = id;
             TimeSpanRange newsTimeRange = channel.NewsTimeRange;
@@ -123,8 +110,7 @@ namespace DXSchedulerSelection
                 recInfo.Start, recInfo.End, (int)recInfo.WeekDays, recInfo.OccurrenceCount, (int)recInfo.Range, (int)recInfo.Type, recInfo.Id.ToString());
             return pattern;
         }
-        static SportEvent GetRandomSportEvent(int id, DateTime start, DateTime end, int channelId)
-        {
+        static SportEvent GetRandomSportEvent(int id, DateTime start, DateTime end, int channelId) {
             var res = new SportEvent();
             res.Id = id;
             res.StartTime = start;
@@ -137,14 +123,11 @@ namespace DXSchedulerSelection
             res.Type = 0;
             return res;
         }
-        static string GetRandomString(string[] events)
-        {
+        static string GetRandomString(string[] events) {
             return events[rnd.Next(0, events.Count())];
         }
-        static string[] GetEvents(int sportId)
-        {
-            switch (sportId)
-            {
+        static string[] GetEvents(int sportId) {
+            switch (sportId) {
                 case 1: return basketballEvents;
                 case 2: return boxingEvents;
                 case 3: return tennisEvents;
@@ -158,10 +141,8 @@ namespace DXSchedulerSelection
             }
             return null;
         }
-        static string[] GetLocations(int sportId)
-        {
-            switch (sportId)
-            {
+        static string[] GetLocations(int sportId) {
+            switch (sportId) {
                 case 1: return basketballLocations;
                 case 2: return boxingLocations;
                 case 3: return tennisLocations;
@@ -175,10 +156,8 @@ namespace DXSchedulerSelection
             }
             return null;
         }
-        static string[] GetDescriptions(int sportId)
-        {
-            switch (sportId)
-            {
+        static string[] GetDescriptions(int sportId) {
+            switch (sportId) {
                 case 1: return basketballDescriptions;
                 case 2: return boxingDescriptions;
                 case 3: return tennisDescriptions;
@@ -194,8 +173,7 @@ namespace DXSchedulerSelection
         }
         static Random rnd = new Random();
 
-        static TimeSpanRange GetRandomNewsTimeRange(TimeSpan start)
-        {
+        static TimeSpanRange GetRandomNewsTimeRange(TimeSpan start) {
             return new TimeSpanRange(start, start + TimeSpan.FromMinutes(rnd.Next(30, 60)));
         }
         #region Sample Data
@@ -353,8 +331,7 @@ namespace DXSchedulerSelection
         };
         #endregion
 
-        public SportChannelsData(int dayCount)
-        {
+        public SportChannelsData(int dayCount) {
             Groups = new ObservableCollection<SportGroup>(SportGroups);
             Channels = new ObservableCollection<SportChannel>(sportChannels);
             Events = GenerateEvents(dayCount);
