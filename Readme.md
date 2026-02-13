@@ -28,7 +28,7 @@ This example uses [SelectedAppointments](https://docs.devexpress.com/WPF/DevExpr
 * [WPF Scheduler - Highlight Time Intervals](https://github.com/DevExpress-Examples/wpf-scheduler-highlight-time-intervals)
 * [WPF Scheduler - Create Regular and Recurring Appointments at the View Model Level](https://github.com/DevExpress-Examples/wpf-scheduler-create-regular-and-recurring-appointments-at-view-model-level)
 <!-- feedback -->
-## Does this example address your development requirements/objectives?
+## Does This Example Address Your Development Requirements/Objectives?
 
 [<img src="https://www.devexpress.com/support/examples/i/yes-button.svg"/>](https://www.devexpress.com/support/examples/survey.xml?utm_source=github&utm_campaign=wpf-scheduler-obtain-selected-appointment-resource-and-time-interval&~~~was_helpful=yes) [<img src="https://www.devexpress.com/support/examples/i/no-button.svg"/>](https://www.devexpress.com/support/examples/survey.xml?utm_source=github&utm_campaign=wpf-scheduler-obtain-selected-appointment-resource-and-time-interval&~~~was_helpful=no)
 
